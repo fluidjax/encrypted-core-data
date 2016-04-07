@@ -3054,6 +3054,12 @@ static void dbsqliteRegExp(sqlite3_context *context, int argc, const char **argv
         else if ([obj isKindOfClass:[NSDate class]]) {
             sqlite3_bind_double(statement, ((int)idx + 1), [obj timeIntervalSince1970]);
         }
+       
+        // data
+        else if ([obj isKindOfClass:[NSData class]]) {
+            NSData *data = (NSData*)obj;
+            sqlite3_bind_blob(statement, ((int)idx + 1), data.bytes, data.length,  SQLITE_TRANSIENT);
+        }
         
     }];
 }
